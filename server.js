@@ -20,7 +20,12 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5174',
+  origin: [
+    process.env.FRONTEND_URL || 'http://localhost:5174',
+    'https://rainbow-otter-5e35ee.netlify.app',
+    'http://localhost:5173',
+    'http://localhost:5174'
+  ],
   credentials: true
 }));
 app.use(morgan('dev'));
