@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": "user_1759676373817",
+      "username": "shivi",
+      "email": "shivi@singh",
+      "password": "$2a$10$IwvuevVW1mQttlDNNVgHxe/ebocKpNdU7w9QYYecZHWRXwHZWEUXy",
+      "role": "user",
+      "createdAt": "2025-10-05T14:59:33.818Z"
+    }
+  ]
+}
