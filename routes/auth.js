@@ -27,6 +27,10 @@ router.post('/login', async (req, res, next) => {
 
     // Store user in session
     req.session.user = user;
+    
+    console.log('✅ Login successful:', user.email);
+    console.log('   Session ID:', req.sessionID);
+    console.log('   Session saved with user:', req.session.user);
 
     res.json({
       success: true,
@@ -59,13 +63,21 @@ router.post('/logout', (req, res) => {
 
 // Check session / Get current user
 router.get('/me', (req, res) => {
+  console.log('🔍 /auth/me endpoint hit');
+  console.log('   Session ID:', req.sessionID);
+  console.log('   Session exists:', !!req.session);
+  console.log('   Session user:', req.session?.user);
+  console.log('   Cookies:', req.headers.cookie);
+  
   if (!req.session || !req.session.user) {
+    console.log('❌ Not authenticated - no session or user');
     return res.status(401).json({
       success: false,
       message: 'Not authenticated'
     });
   }
 
+  console.log('✅ User authenticated:', req.session.user.email);
   res.json({
     success: true,
     data: {
