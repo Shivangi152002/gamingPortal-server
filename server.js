@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js';
 import gameRoutes from './routes/games.js';
 import uploadRoutes from './routes/upload.js';
 import userRoutes from './routes/users.js';
+import siteSettingsRoutes from './routes/siteSettings.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -20,39 +21,73 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
+
 // CORS configuration - fully environment driven
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'http://localhost:5174', // Default dashboard URL
+  'http://localhost:5173', // Alternative Vite port
   ...(process.env.ADDITIONAL_ORIGINS ? process.env.ADDITIONAL_ORIGINS.split(',').map(origin => origin.trim()) : [])
 ].filter(Boolean); // Remove any undefined/null values
 
+console.log('🔧 CORS Configuration:');
+console.log('   Allowed Origins:', allowedOrigins);
+
 app.use(cors({
-  origin: allowedOrigins.length > 0 ? allowedOrigins : true, // Allow all if no origins specified
-  credentials: true
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, curl)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(true)) {
+      callback(null, true);
+    } else {
+      console.log('⚠️ CORS blocked origin:', origin);
+      callback(null, true); // Still allow in development
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['set-cookie']
 }));
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session middleware - fully environment driven
+// Validate required session secret
+if (!process.env.SESSION_SECRET) {
+  console.error('❌ SESSION_SECRET is required in .env file');
+  console.error('💡 Generate one with: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"');
+  process.exit(1);
+}
+
+// Session middleware - optimized for development
 const sessionConfig = {
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  name: 'sessionId', // Custom name instead of default connect.sid
   cookie: {
-    secure: NODE_ENV === 'production', // HTTPS in production
+    secure: NODE_ENV === 'production', // HTTPS in production only
     httpOnly: true,
     maxAge: parseInt(process.env.SESSION_MAX_AGE) || 24 * 60 * 60 * 1000, // 24 hours default
-    sameSite: NODE_ENV === 'production' ? 'none' : 'lax',
-    domain: process.env.SESSION_DOMAIN || (NODE_ENV === 'production' ? undefined : 'localhost')
+    sameSite: NODE_ENV === 'production' ? 'none' : 'lax', // 'lax' for development (same-site)
+    path: '/'
   }
 };
 
-// Validate required session secret
-if (!process.env.SESSION_SECRET) {
-  console.error('❌ SESSION_SECRET is required in .env file');
-  process.exit(1);
+// Don't set domain in development (causes cookie issues)
+if (NODE_ENV === 'production' && process.env.SESSION_DOMAIN) {
+  sessionConfig.cookie.domain = process.env.SESSION_DOMAIN;
 }
+
+console.log('🍪 Session Configuration:');
+console.log('   Cookie Name:', sessionConfig.name);
+console.log('   Secure:', sessionConfig.cookie.secure);
+console.log('   SameSite:', sessionConfig.cookie.sameSite);
+console.log('   Domain:', sessionConfig.cookie.domain || 'not set (uses request domain)');
+console.log('   Max Age:', sessionConfig.cookie.maxAge / 1000, 'seconds');
 
 app.use(session(sessionConfig));
 
@@ -61,6 +96,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/games', gameRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/site-settings', siteSettingsRoutes);
 
 // Health check - shows configuration status
 app.get('/api/health', (req, res) => {

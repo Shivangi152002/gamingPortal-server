@@ -132,10 +132,15 @@ export const uploadFileToS3 = async (file, folder = '', preserveOriginalName = f
     
     const key = folder ? `public/${folder}/${fileName}` : `public/${fileName}`;
     
+    // Even in dummy mode, return a CloudFront-like URL structure
+    const cloudFrontUrl = process.env.CLOUDFRONT_URL || 'https://d1xtpep1y73br3.cloudfront.net';
+    
     return {
       key,
-      url: `https://via.placeholder.com/300x200/cccccc/666666?text=${fileName}`,
-      path: `/${key}`
+      url: `${cloudFrontUrl}/${key}`,
+      path: `/${key}`,
+      cloudFrontUrl: cloudFrontUrl,
+      isDummy: true // Flag to indicate this is a dummy response
     };
   }
 
@@ -176,12 +181,20 @@ export const uploadFileToS3 = async (file, folder = '', preserveOriginalName = f
     
     await upload.done();
     
-    // Return CloudFront URL
-    const cloudFrontUrl = process.env.CLOUDFRONT_URL || `https://${bucketName}.s3.amazonaws.com`;
+    // Return CloudFront URL (prioritize CloudFront, fallback to S3 direct URL)
+    const cloudFrontUrl = process.env.CLOUDFRONT_URL;
+    const baseUrl = cloudFrontUrl || `https://${bucketName}.s3.${process.env.AWS_REGION || 'us-east-1'}.amazonaws.com`;
+    
+    // Log warning if CloudFront is not configured
+    if (!cloudFrontUrl) {
+      console.warn('⚠️ CLOUDFRONT_URL not configured - using direct S3 URL (slower)');
+    }
+    
     return {
       key,
-      url: `${cloudFrontUrl}/${key}`,
-      path: `/${key}`
+      url: `${baseUrl}/${key}`,
+      path: `/${key}`,
+      cloudFrontUrl: cloudFrontUrl || null
     };
   } catch (error) {
     console.error('S3 Upload Error:', error.message);
@@ -223,9 +236,114 @@ const streamToString = (stream) => {
   });
 };
 
+// Get site settings from S3
+export const getSiteSettingsFromS3 = async () => {
+  // If AWS is not properly configured, return default settings
+  if (!isAWSConfigured()) {
+    console.log('AWS not configured, returning default site settings');
+    return getDefaultSiteSettings();
+  }
+
+  try {
+    const s3Client = getS3Client();
+    const bucketName = getBucketName();
+    
+    const command = new GetObjectCommand({
+      Bucket: bucketName,
+      Key: 'public/site-settings.json'
+    });
+    
+    const response = await s3Client.send(command);
+    const bodyContents = await streamToString(response.Body);
+    const settings = JSON.parse(bodyContents);
+    
+    console.log('📊 Site settings loaded from S3');
+    return settings;
+  } catch (error) {
+    if (error.name === 'NoSuchKey') {
+      // File doesn't exist, return default settings
+      console.log('⚠️ site-settings.json not found, returning defaults');
+      return getDefaultSiteSettings();
+    }
+    console.error('S3 Error:', error.message);
+    // Return default settings instead of throwing error
+    return getDefaultSiteSettings();
+  }
+};
+
+// Update site settings in S3
+export const updateSiteSettingsInS3 = async (settings) => {
+  // If AWS is not properly configured, just log and return
+  if (!isAWSConfigured()) {
+    console.log('AWS not configured, skipping S3 update for site settings');
+    return;
+  }
+
+  try {
+    const s3Client = getS3Client();
+    const bucketName = getBucketName();
+    
+    const command = new PutObjectCommand({
+      Bucket: bucketName,
+      Key: 'public/site-settings.json',
+      Body: JSON.stringify(settings, null, 2),
+      ContentType: 'application/json',
+      CacheControl: 'no-cache'
+    });
+    
+    await s3Client.send(command);
+    console.log('✅ Site settings updated in S3');
+  } catch (error) {
+    console.error('S3 Update Error:', error.message);
+    throw new Error('Failed to update site settings in S3');
+  }
+};
+
+// Get default site settings
+const getDefaultSiteSettings = () => {
+  return {
+    siteTitle: 'GameLauncher - Bite-Sized Games Portal',
+    siteDescription: 'Play amazing HTML5 games instantly. No downloads, no ads, just pure gaming fun!',
+    faviconUrl: '/public/vite.svg',
+    splashLogoUrl: '/public/assets/Gamelauncher_logo.webp',
+    footerText: '© 2024 GameLauncher. All rights reserved.',
+    footerLinks: {
+      'getToKnowUs': [
+        { name: 'About', url: '/about', active: true },
+        { name: 'Developers', url: '/developers', active: true },
+        { name: 'Kids', url: '/kids', active: true },
+        { name: 'Jobs', url: '/jobs', active: true }
+      ],
+      'privacyAndTerms': [
+        { name: 'Privacy Center', url: '/privacy', active: true }
+      ],
+      'helpAndSupport': [
+        { name: 'FAQ', url: '/faq', active: true },
+        { name: 'Contact', url: '/contact', active: true }
+      ],
+      'additionalLinks': []
+    },
+    socialLinks: {
+      linkedin: 'https://linkedin.com',
+      instagram: 'https://instagram.com',
+      twitter: 'https://x.com',
+      facebook: '',
+      youtube: ''
+    },
+    customMetaTags: [
+      { property: 'og:title', content: 'GameLauncher - Bite-Sized Games Portal' },
+      { property: 'og:description', content: 'Play amazing HTML5 games instantly' },
+      { property: 'og:image', content: '/public/assets/Gamelauncher_logo.webp' },
+      { property: 'keywords', content: 'games, html5 games, online games, free games, browser games' }
+    ]
+  };
+};
+
 export default {
   getGameDataFromS3,
   updateGameDataInS3,
   uploadFileToS3,
-  deleteFileFromS3
+  deleteFileFromS3,
+  getSiteSettingsFromS3,
+  updateSiteSettingsInS3
 };

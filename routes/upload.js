@@ -35,7 +35,12 @@ const upload = multer({
 });
 
 // Helper to determine S3 folder based on file type
-const getS3Folder = (fieldName, mimetype) => {
+const getS3Folder = (fieldName, mimetype, customFolder) => {
+  // If custom folder is specified, use it
+  if (customFolder) {
+    return customFolder;
+  }
+  
   if (fieldName === 'gif' || mimetype === 'image/gif') {
     return 'gif';
   } else if (fieldName === 'icon' || fieldName === 'thumbnail') {
@@ -121,6 +126,42 @@ router.post('/file', authenticateSession, upload.single('file'), async (req, res
         path: s3Result.path,
         url: s3Result.url,
         s3Key: s3Result.key
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Upload single file with custom folder support (for site settings)
+router.post('/', authenticateSession, upload.single('file'), async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No file uploaded'
+      });
+    }
+
+    const customFolder = req.body.folder; // Get custom folder from form data
+    const folder = getS3Folder(req.file.fieldname, req.file.mimetype, customFolder);
+    
+    // For favicon and splash logo, preserve original name
+    const preserveOriginalName = req.body.type === 'favicon' || req.body.type === 'splash-logo';
+    const s3Result = await uploadFileToS3(req.file, folder, preserveOriginalName);
+
+    res.json({
+      success: true,
+      message: 'File uploaded successfully to S3',
+      data: {
+        filename: s3Result.key.split('/').pop(),
+        originalName: req.file.originalname,
+        size: req.file.size,
+        mimetype: req.file.mimetype,
+        path: s3Result.path,
+        url: s3Result.url,
+        s3Key: s3Result.key,
+        folder: folder
       }
     });
   } catch (error) {
