@@ -1,0 +1,171 @@
+{
+  "siteTitle": "game portal",
+  "siteDescription": "Play amazing HTML5 games instantly. No downloads, no ads, just pure gaming fun!",
+  "faviconUrl": "/public/assets/instagram.png",
+  "splashLogoUrl": "/public/assets/P138_Icon.jpg",
+  "footerText": "© 2024 GameLauncher. All rights reserved.",
+  "footerLinks": {
+    "getToKnowUs": [
+      {
+        "name": "About",
+        "url": "/about",
+        "active": true
+      },
+      {
+        "name": "Developers",
+        "url": "/developers",
+        "active": true
+      },
+      {
+        "name": "Kids",
+        "url": "/kids",
+        "active": true
+      },
+      {
+        "name": "Jobs",
+        "url": "/jobs",
+        "active": true
+      }
+    ],
+    "privacyAndTerms": [
+      {
+        "name": "Privacy Center",
+        "url": "/privacy",
+        "active": true
+      }
+    ],
+    "helpAndSupport": [
+      {
+        "name": "FAQ",
+        "url": "/faq",
+        "active": true
+      },
+      {
+        "name": "Contact",
+        "url": "/contact",
+        "active": true
+      }
+    ],
+    "additionalLinks": [
+      {
+        "name": "test",
+        "url": "www.test.com",
+        "active": true
+      }
+    ]
+  },
+  "socialLinks": {
+    "linkedin": {
+      "url": "https://linkedin.com",
+      "icon": "/public/assets/social-icon/linkedin.png",
+      "active": true,
+      "label": "LinkedIn"
+    },
+    "instagram": {
+      "url": "https://instagram.com",
+      "icon": "/public/assets/social-icon/instagram.png",
+      "active": true,
+      "label": "Instagram"
+    },
+    "twitter": {
+      "url": "https://x.com",
+      "icon": "/public/assets/social-icon/twitter.png",
+      "active": true,
+      "label": "Twitter"
+    },
+    "facebook": {
+      "url": "",
+      "icon": "/public/assets/social-icon/facebook.png",
+      "active": false,
+      "label": "Facebook"
+    },
+    "youtube": {
+      "url": "",
+      "icon": "/public/assets/social-icon/youtube.png",
+      "active": false,
+      "label": "YouTube"
+    }
+  },
+  "customMetaTags": [
+    {
+      "property": "og:title",
+      "content": "GameLauncher - Bite-Sized Games Portal",
+      "active": true
+    },
+    {
+      "property": "og:description",
+      "content": "Play amazing HTML5 games instantly. No downloads, no ads, just pure gaming fun!",
+      "active": true
+    },
+    {
+      "property": "og:image",
+      "content": "/public/assets/Gamelauncher_logo.webp",
+      "active": true
+    },
+    {
+      "property": "og:type",
+      "content": "website",
+      "active": true
+    },
+    {
+      "property": "og:url",
+      "content": "https://gamelauncher.com",
+      "active": true
+    },
+    {
+      "property": "og:site_name",
+      "content": "GameLauncher",
+      "active": true
+    },
+    {
+      "property": "twitter:card",
+      "content": "summary_large_image",
+      "active": true
+    },
+    {
+      "property": "twitter:title",
+      "content": "GameLauncher - Bite-Sized Games Portal",
+      "active": true
+    },
+    {
+      "property": "twitter:description",
+      "content": "Play amazing HTML5 games instantly. No downloads, no ads, just pure gaming fun!",
+      "active": true
+    },
+    {
+      "property": "twitter:image",
+      "content": "/public/assets/Gamelauncher_logo.webp",
+      "active": true
+    },
+    {
+      "property": "keywords",
+      "content": "games, html5 games, online games, free games, browser games, instant play, no download",
+      "active": true
+    },
+    {
+      "property": "author",
+      "content": "GameLauncher Team",
+      "active": true
+    },
+    {
+      "property": "robots",
+      "content": "index, follow",
+      "active": true
+    },
+    {
+      "property": "viewport",
+      "content": "width=device-width, initial-scale=1.0",
+      "active": true
+    },
+    {
+      "property": "theme-color",
+      "content": "#1976d2",
+      "active": true
+    },
+    {
+      "property": "descriotion",
+      "content": "testing",
+      "active": true
+    }
+  ]
+}

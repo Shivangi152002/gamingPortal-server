@@ -1,8 +1,13 @@
 import express from 'express';
 import { authenticateSession } from '../middleware/auth.js';
 import { getGameDataFromS3, updateGameDataInS3 } from '../utils/s3Manager.js';
+import GameRankingService from '../services/GameRankingService.js';
 
 const router = express.Router();
+const rankingService = new GameRankingService({ 
+  getGameDataFromS3, 
+  updateGameDataInS3 
+});
 
 // GET all games - Public endpoint
 router.get('/', async (req, res, next) => {
@@ -49,7 +54,7 @@ router.post('/', authenticateSession, async (req, res, next) => {
       gameData.games = [];
     }
 
-    const newGame = {
+    const baseGame = {
       id: req.body.id || `game_${Date.now()}`,
       name: req.body.name,
       slug: req.body.slug || req.body.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, ''),
@@ -61,6 +66,9 @@ router.post('/', authenticateSession, async (req, res, next) => {
       size: req.body.size || 'small',
       category: req.body.category
     };
+
+    // Initialize with ranking data
+    const newGame = rankingService.initializeGameRanking(baseGame);
 
     gameData.games.push(newGame);
     await updateGameDataInS3(gameData);

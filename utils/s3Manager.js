@@ -288,11 +288,12 @@ export const updateSiteSettingsInS3 = async (settings) => {
       Key: 'public/site-settings.json',
       Body: JSON.stringify(settings, null, 2),
       ContentType: 'application/json',
-      CacheControl: 'no-cache'
+      CacheControl: 'no-cache, no-store, must-revalidate', // Force fresh fetch
+      Expires: new Date(0) // Expire immediately
     });
     
     await s3Client.send(command);
-    console.log('✅ Site settings updated in S3');
+    console.log('✅ Site settings updated in S3 with no-cache headers');
   } catch (error) {
     console.error('S3 Update Error:', error.message);
     throw new Error('Failed to update site settings in S3');
@@ -330,12 +331,7 @@ const getDefaultSiteSettings = () => {
       facebook: '',
       youtube: ''
     },
-    customMetaTags: [
-      { property: 'og:title', content: 'GameLauncher - Bite-Sized Games Portal' },
-      { property: 'og:description', content: 'Play amazing HTML5 games instantly' },
-      { property: 'og:image', content: '/public/assets/Gamelauncher_logo.webp' },
-      { property: 'keywords', content: 'games, html5 games, online games, free games, browser games' }
-    ]
+        customMetaTags: []
   };
 };
 
