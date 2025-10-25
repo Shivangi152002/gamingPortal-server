@@ -14,13 +14,16 @@ const upload = multer({
     fileSize: parseInt(process.env.MAX_FILE_SIZE) || 50 * 1024 * 1024, // 50MB default
   },
   fileFilter: (req, file, cb) => {
-    // Accept images, html, and zip files
+    // Accept images, videos, html, and zip files
     const allowedMimes = [
       'image/jpeg',
       'image/jpg',
       'image/png',
       'image/gif',
       'image/webp',
+      'video/mp4',
+      'video/webm',
+      'video/ogg',
       'text/html',
       'application/zip',
       'application/x-zip-compressed'
@@ -29,7 +32,7 @@ const upload = multer({
     if (allowedMimes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error(`Invalid file type: ${file.mimetype}. Allowed: images, HTML, ZIP`));
+      cb(new Error(`Invalid file type: ${file.mimetype}. Allowed: images, videos, HTML, ZIP`));
     }
   }
 });
@@ -47,6 +50,10 @@ const getS3Folder = (fieldName, mimetype, customFolder) => {
     return 'thumbnail';
   } else if (fieldName === 'htmlZip' || mimetype === 'text/html' || mimetype.includes('zip')) {
     return 'games';
+  } else if (fieldName === 'bannerFile' || fieldName.startsWith('banner')) {
+    return 'banners';
+  } else if (mimetype.startsWith('video/')) {
+    return 'videos';
   }
   return 'assets';
 };

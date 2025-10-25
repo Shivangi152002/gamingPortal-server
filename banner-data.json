@@ -1,0 +1,29 @@
+{
+  "banners": [
+    {
+      "id": "1",
+      "position": "left",
+      "type": "image",
+      "title": "Gaming Event",
+      "url": "<div style='width:200px; height:100px; background-color:#FF6B6B; display:flex; align-items:center; justify-content:center; color:white; border-radius:5px;'>Gaming Event Banner</div>",
+      "link": "https://gaming-event.com"
+    },
+    {
+      "id": "2",
+      "position": "right",
+      "type": "video",
+      "title": "Game Trailer",
+      "url": "<div style='width:200px; height:100px; background-color:#4ECDC4; display:flex; align-items:center; justify-content:center; color:white; border-radius:5px;'>Game Trailer Banner</div>",
+      "link": "https://game-trailer.com"
+    },
+    {
+      "id": "3",
+      "position": "bottom",
+      "type": "code",
+      "title": "Special Discount",
+      "content": "<div style='background: linear-gradient(45deg, #FF6B6B, #4ECDC4); padding: 20px; border-radius: 8px; color: white; text-align: center;'><h3>🎮 SPECIAL OFFER!</h3><p>Use code GAMING25 for 25% off!</p></div>",
+      "url": "<div style='width:200px; height:100px; background-color:#FFD93D; display:flex; align-items:center; justify-content:center; color:black; border-radius:5px;'>Special Discount Banner</div>",
+      "link": "https://store.example.com"
+    }
+  ]
+}
