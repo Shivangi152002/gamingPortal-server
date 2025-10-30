@@ -19,6 +19,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// When running behind a reverse proxy (NGINX/Cloudflare/ALB),
+// trust the proxy so req.secure reflects the original protocol (https)
+// This is REQUIRED in production to set secure cookies correctly.
+if (NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+  console.log('🔒 Trust proxy enabled (production)');
+}
+
 // Middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
