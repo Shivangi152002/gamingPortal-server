@@ -1,0 +1,155 @@
+{
+  "games": [
+    {
+      "id": "minefun-io",
+      "title": "MineFun.io",
+      "developer": "Vectaria",
+      "rating": 4.1,
+      "votes": 668237,
+      "description": "MineFun.io is an online game that throws you into a vibrant blocky world packed with adventures! Play parkour, battle friends, and unlock cool skins.",
+      "logo": "public/logos/minefun-io.png",
+      "hidden": false,
+      "sections": [
+        {
+          "heading": "New Game Rooms",
+          "description": "Three new modes: Bed Wars, Sky Wars, and Parkour — each offering unique gameplay experiences."
+        },
+        {
+          "heading": "Game Modes",
+          "items": [
+            {
+              "mode_name": "Bed Wars",
+              "description": "Protect your bed while destroying others. Work in teams to win!"
+            },
+            {
+              "mode_name": "Sky Wars",
+              "description": "Fight on floating islands. Gather blocks, bridge gaps, and survive."
+            },
+            {
+              "mode_name": "Parkour",
+              "description": "Jump and run through tricky obstacle maps to reach the finish line."
+            }
+          ]
+        },
+        {
+          "heading": "How to Play",
+          "controls": {
+            "Move": "WASD or Arrow Keys",
+            "Jump": "Space Bar",
+            "Crouch": "C"
+          }
+        },
+        {
+          "heading": "Developer Info",
+          "details": {
+            "creator": "Vectaria",
+            "other_games": ["Cryzen.io", "Vectaria.io"],
+            "platforms": ["Desktop", "Mobile"],
+            "multiplayer_support": true,
+            "free_to_play": true,
+            "available_on": "Poki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "crazycars-io",
+      "title": "CrazyCars.io",
+      "developer": "FastWheel Studios",
+      "rating": 4.5,
+      "votes": 432189,
+      "description": "CrazyCars.io is a fast-paced racing and demolition game where you drift, crash, and dominate the track in real-time multiplayer battles.",
+      "logo": "public/logos/crazycars-io.png",
+      "hidden": false,
+      "sections": [
+        {
+          "heading": "Game Modes",
+          "items": [
+            {
+              "mode_name": "Drift Race",
+              "description": "Race through tight tracks and earn drift points."
+            },
+            {
+              "mode_name": "Battle Arena",
+              "description": "Smash into other cars and survive as long as possible."
+            },
+            {
+              "mode_name": "Free Drive",
+              "description": "Explore the open city without limits."
+            }
+          ]
+        },
+        {
+          "heading": "How to Play",
+          "controls": {
+            "Accelerate": "W or Up Arrow",
+            "Brake": "S or Down Arrow",
+            "Steer": "A/D or Left/Right Arrows",
+            "Boost": "Shift"
+          }
+        },
+        {
+          "heading": "Developer Info",
+          "details": {
+            "creator": "FastWheel Studios",
+            "other_games": ["SpeedRush.io", "TurboTrack.io"],
+            "platforms": ["Desktop", "Mobile"],
+            "multiplayer_support": true,
+            "free_to_play": true,
+            "available_on": "Poki"
+          }
+        }
+      ]
+    },
+    {
+      "id": "battlezone-io",
+      "title": "BattleZone.io",
+      "developer": "FireCore Games",
+      "rating": 4.3,
+      "votes": 512790,
+      "description": "BattleZone.io is a top-down shooter where players fight for survival in a shrinking battlefield.",
+      "logo": "public/logos/battlezone-io.png",
+      "hidden": false,
+      "sections": [
+        {
+          "heading": "Game Modes",
+          "items": [
+            {
+              "mode_name": "Solo",
+              "description": "Fight alone and survive until you're the last player standing."
+            },
+            {
+              "mode_name": "Duo",
+              "description": "Team up with a friend to dominate the battlefield."
+            },
+            {
+              "mode_name": "Squad",
+              "description": "Join a 4-player squad and coordinate attacks to win."
+            }
+          ]
+        },
+        {
+          "heading": "How to Play",
+          "controls": {
+            "Move": "WASD or Arrow Keys",
+            "Shoot": "Left Click",
+            "Aim": "Mouse",
+            "Reload": "R"
+          }
+        },
+        {
+          "heading": "Developer Info",
+          "details": {
+            "creator": "FireCore Games",
+            "other_games": ["WarArena.io", "TankBrawl.io"],
+            "platforms": ["Desktop"],
+            "multiplayer_support": true,
+            "free_to_play": true,
+            "available_on": "Poki"
+          }
+        }
+      ]
+    }
+  ]
+}
+
