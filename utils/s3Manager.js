@@ -132,8 +132,9 @@ export const uploadFileToS3 = async (file, folder = '', preserveOriginalName = f
     
     const key = folder ? `public/${folder}/${fileName}` : `public/${fileName}`;
     
-    // Even in dummy mode, return a CloudFront-like URL structure
-    const cloudFrontUrl = process.env.CLOUDFRONT_URL || 'https://d1xtpep1y73br3.cloudfront.net';
+    // Even in dummy mode, return a S3 direct URL
+    // TODO: Switch to CloudFront when verified: 'https://dXXXXX.cloudfront.net'
+    const cloudFrontUrl = process.env.CLOUDFRONT_URL || 'https://gameportal-assets.s3.us-east-1.amazonaws.com'; // S3 direct
     
     return {
       key,
