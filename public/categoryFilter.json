@@ -1,0 +1,202 @@
+{
+  "categories": [
+    {
+      "id": "all",
+      "name": "All",
+      "icon": "public/categoryFilters/all.png",
+      "enabled": true,
+      "sortOrder": 0,
+      "translations": {
+        "en": "All",
+        "hi": "सभी",
+        "es": "Todos",
+        "fr": "Tous"
+      }
+    },
+    {
+      "id": "action",
+      "name": "Action",
+      "icon": "public/categoryFilters/action.png",
+      "enabled": true,
+      "sortOrder": 1,
+      "translations": {
+        "en": "Action",
+        "hi": "एक्शन",
+        "es": "Acción",
+        "fr": "Action"
+      }
+    },
+    {
+      "id": "adventure",
+      "name": "Adventure",
+      "icon": "public/categoryFilters/adventure.png",
+      "enabled": true,
+      "sortOrder": 2,
+      "translations": {
+        "en": "Adventure",
+        "hi": "एडवेंचर",
+        "es": "Aventura",
+        "fr": "Aventure"
+      }
+    },
+    {
+      "id": "arcade",
+      "name": "Arcade",
+      "icon": "public/categoryFilters/arcade.png",
+      "enabled": true,
+      "sortOrder": 3,
+      "translations": {
+        "en": "Arcade",
+        "hi": "आर्केड",
+        "es": "Arcade",
+        "fr": "Arcade"
+      }
+    },
+    {
+      "id": "board",
+      "name": "Board",
+      "icon": "public/categoryFilters/board.png",
+      "enabled": true,
+      "sortOrder": 4,
+      "translations": {
+        "en": "Board",
+        "hi": "बोर्ड",
+        "es": "Tablero",
+        "fr": "Plateau"
+      }
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "icon": "public/categoryFilters/card.png",
+      "enabled": true,
+      "sortOrder": 5,
+      "translations": {
+        "en": "Card",
+        "hi": "कार्ड",
+        "es": "Cartas",
+        "fr": "Cartes"
+      }
+    },
+    {
+      "id": "casino",
+      "name": "Casino",
+      "icon": "public/categoryFilters/casino.png",
+      "enabled": true,
+      "sortOrder": 6,
+      "translations": {
+        "en": "Casino",
+        "hi": "कैसीनो",
+        "es": "Casino",
+        "fr": "Casino"
+      }
+    },
+    {
+      "id": "educational",
+      "name": "Educational",
+      "icon": "public/categoryFilters/educational.png",
+      "enabled": true,
+      "sortOrder": 7,
+      "translations": {
+        "en": "Educational",
+        "hi": "शैक्षिक",
+        "es": "Educativo",
+        "fr": "Éducatif"
+      }
+    },
+    {
+      "id": "music",
+      "name": "Music",
+      "icon": "public/categoryFilters/music.png",
+      "enabled": true,
+      "sortOrder": 8,
+      "translations": {
+        "en": "Music",
+        "hi": "संगीत",
+        "es": "Música",
+        "fr": "Musique"
+      }
+    },
+    {
+      "id": "racing",
+      "name": "Racing",
+      "icon": "public/categoryFilters/racing.png",
+      "enabled": true,
+      "sortOrder": 9,
+      "translations": {
+        "en": "Racing",
+        "hi": "रेसिंग",
+        "es": "Carreras",
+        "fr": "Course"
+      }
+    },
+    {
+      "id": "simulation",
+      "name": "Simulation",
+      "icon": "public/categoryFilters/simulation.png",
+      "enabled": true,
+      "sortOrder": 10,
+      "translations": {
+        "en": "Simulation",
+        "hi": "सिमुलेशन",
+        "es": "Simulación",
+        "fr": "Simulation"
+      }
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy",
+      "icon": "public/categoryFilters/strategic.png",
+      "enabled": true,
+      "sortOrder": 11,
+      "translations": {
+        "en": "Strategy",
+        "hi": "रणनीति",
+        "es": "Estrategia",
+        "fr": "Stratégie"
+      }
+    },
+    {
+      "id": "sport",
+      "name": "Sports",
+      "icon": "public/categoryFilters/sport.png",
+      "enabled": true,
+      "sortOrder": 12,
+      "translations": {
+        "en": "Sports",
+        "hi": "खेल",
+        "es": "Deportes",
+        "fr": "Sports"
+      }
+    },
+    {
+      "id": "trivia",
+      "name": "Trivia",
+      "icon": "public/categoryFilters/trivia.png",
+      "enabled": true,
+      "sortOrder": 13,
+      "translations": {
+        "en": "Trivia",
+        "hi": "ट्रिविया",
+        "es": "Trivia",
+        "fr": "Trivia"
+      }
+    },
+    {
+      "id": "word",
+      "name": "Word",
+      "icon": "public/categoryFilters/word.png",
+      "enabled": true,
+      "sortOrder": 14,
+      "translations": {
+        "en": "Word",
+        "hi": "शब्द",
+        "es": "Palabra",
+        "fr": "Mot"
+      }
+    }
+  ],
+  "lastUpdated": "2025-01-15T00:00:00.000Z",
+  "version": "1.0.0"
+}
+

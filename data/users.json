@@ -7,6 +7,14 @@
       "password": "$2a$10$//mrqhr2Cwrl6p0Lb.EoROpUWXIxkXJFbnhIHilgpIG6rie56boP2",
       "role": "user",
       "createdAt": "2025-10-05T16:52:41.490Z"
+    },
+    {
+      "id": "user_1762024215053",
+      "username": "shivi",
+      "email": "shivi@shivi",
+      "password": "$2a$10$xihTHh36oQ4romxX9N3Z2eVD.ANdPbtUsSFoOd81/uyPB7zNshR0W",
+      "role": "user",
+      "createdAt": "2025-11-01T19:10:15.053Z"
     }
   ]
 }

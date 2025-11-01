@@ -12,6 +12,7 @@ import siteSettingsRoutes from './routes/siteSettings.js';
 import rankingRoutes from './routes/ranking.js';
 import bannerRoutes from './routes/banners.js';
 import aboutRoutes from './routes/about.js';
+import categoryFiltersRoutes from './routes/categoryFilters.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 dotenv.config();
@@ -111,6 +112,7 @@ app.use('/api/site-settings', siteSettingsRoutes);
 app.use('/api/ranking', rankingRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/about', aboutRoutes);
+app.use('/api/category-filters', categoryFiltersRoutes);
 
 // Health check - shows configuration status
 app.get('/api/health', (req, res) => {
