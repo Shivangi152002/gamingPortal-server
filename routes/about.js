@@ -59,6 +59,7 @@ router.post('/', authenticateSession, async (req, res, next) => {
       logo: req.body.logo || '',
       hidden: req.body.hidden !== undefined ? req.body.hidden : false,
       sections: req.body.sections || [],
+      categories: req.body.categories || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
@@ -111,6 +112,7 @@ router.put('/:gameId', authenticateSession, async (req, res, next) => {
       logo: req.body.logo !== undefined ? req.body.logo : aboutData.games[gameIndex].logo,
       hidden: req.body.hidden !== undefined ? req.body.hidden : aboutData.games[gameIndex].hidden,
       sections: req.body.sections !== undefined ? req.body.sections : aboutData.games[gameIndex].sections,
+      categories: req.body.categories !== undefined ? req.body.categories : aboutData.games[gameIndex].categories,
       updatedAt: new Date().toISOString()
     };
 

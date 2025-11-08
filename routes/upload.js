@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import { authenticateSession } from '../middleware/auth.js';
 import { uploadFileToS3, deleteFileFromS3 } from '../utils/s3Manager.js';
+import { sanitizeAndValidate, getFolderNameFromZip } from '../utils/pathSanitizer.js';
 
 const router = express.Router();
 
@@ -74,6 +75,7 @@ router.post('/files', authenticateSession, upload.fields([
     }
 
     const uploadedFiles = {};
+    const warnings = [];
 
     // Process each uploaded file
     for (const [fieldName, files] of Object.entries(req.files)) {
@@ -82,6 +84,25 @@ router.post('/files', authenticateSession, upload.fields([
       
       // Preserve original name for ZIP files (HTML games)
       const preserveOriginalName = fieldName === 'htmlZip' || file.mimetype.includes('zip');
+      
+      // Validate ZIP filenames for potential issues
+      if (fieldName === 'htmlZip' || file.mimetype.includes('zip')) {
+        const validation = sanitizeAndValidate(file.originalname, true);
+        
+        if (!validation.validation.valid) {
+          warnings.push({
+            file: file.originalname,
+            issues: validation.validation.issues,
+            suggestion: `Consider renaming to: ${validation.sanitized}`
+          });
+          
+          console.warn(`⚠️ Filename issues detected for ${file.originalname}:`, validation.validation.issues);
+        }
+        
+        // Extract folder name for logging
+        const folderName = getFolderNameFromZip(file.originalname);
+        console.log(`📦 ZIP uploaded: ${file.originalname} → Folder: ${folderName}`);
+      }
       
       // Upload to S3
       const s3Result = await uploadFileToS3(file, folder, preserveOriginalName);
@@ -100,7 +121,8 @@ router.post('/files', authenticateSession, upload.fields([
     res.json({
       success: true,
       message: 'Files uploaded successfully to S3',
-      data: uploadedFiles
+      data: uploadedFiles,
+      warnings: warnings.length > 0 ? warnings : undefined
     });
   } catch (error) {
     next(error);
@@ -120,6 +142,26 @@ router.post('/file', authenticateSession, upload.single('file'), async (req, res
     const folder = getS3Folder(req.file.fieldname, req.file.mimetype);
     // Preserve original name for ZIP files (HTML games)
     const preserveOriginalName = req.file.fieldname === 'htmlZip' || req.file.mimetype.includes('zip');
+    
+    // Validate ZIP filenames
+    let warnings = [];
+    if (req.file.fieldname === 'htmlZip' || req.file.mimetype.includes('zip')) {
+      const validation = sanitizeAndValidate(req.file.originalname, true);
+      
+      if (!validation.validation.valid) {
+        warnings.push({
+          file: req.file.originalname,
+          issues: validation.validation.issues,
+          suggestion: `Consider renaming to: ${validation.sanitized}`
+        });
+        
+        console.warn(`⚠️ Filename issues detected for ${req.file.originalname}:`, validation.validation.issues);
+      }
+      
+      const folderName = getFolderNameFromZip(req.file.originalname);
+      console.log(`📦 ZIP uploaded: ${req.file.originalname} → Folder: ${folderName}`);
+    }
+    
     const s3Result = await uploadFileToS3(req.file, folder, preserveOriginalName);
 
     res.json({
@@ -133,7 +175,8 @@ router.post('/file', authenticateSession, upload.single('file'), async (req, res
         path: s3Result.path,
         url: s3Result.url,
         s3Key: s3Result.key
-      }
+      },
+      warnings: warnings.length > 0 ? warnings : undefined
     });
   } catch (error) {
     next(error);
